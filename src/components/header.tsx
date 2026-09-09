@@ -14,6 +14,16 @@ export default function FormHeader() {
                         className="h-auto w-full object-contain"
                     />
                 </div>
+
+                <div>
+                    <div className="text-xl font-bold tracking-wide">
+                        ALLEN ISD
+                    </div>
+
+                    <div className="text-sm text-slate-300">
+                        Technology Department
+                    </div>
+                </div>
             </div>            
         </header>
     )
