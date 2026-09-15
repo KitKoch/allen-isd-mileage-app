@@ -10,7 +10,8 @@ import {
   Settings,
   Trash2,
 } from "lucide-react";
-import FormHeader from "@/components/header";
+import FormHeader from "@/components/formHeader";
+import FormTitle from "@/components/formTitle";
 
 type Trip = {
   id: number;
@@ -107,8 +108,10 @@ export default function Home() {
       </div>
 
       <section className="p-6 sm:p-8">
-        
+        <FormTitle />
       </section>
+
+      
     </main>
   );
 }

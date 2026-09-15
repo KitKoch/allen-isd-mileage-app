@@ -1,3 +1,4 @@
+import { MapPin, Settings } from "lucide-react";
 import Image from "next/image";
 
 export default function FormHeader() {
@@ -24,7 +25,19 @@ export default function FormHeader() {
                         Technology Department
                     </div>
                 </div>
-            </div>            
+            </div>
+
+            <nav className="flex flex-wrap items-center gap-6 text-sm font-medium">
+                <button className="flex items-center gap-2 border-b-2 border-white pb-1">
+                    <MapPin size={18} />
+                    Mileage Calculator
+                </button>
+
+                <button className="flex items-center gap-2 text-slate-200 transition hover:text-white">
+                    <Settings size={18} />
+                    Settings
+                </button>
+            </nav>            
         </header>
     )
 }
