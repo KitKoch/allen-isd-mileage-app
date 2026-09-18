@@ -10,8 +10,9 @@ import {
   Settings,
   Trash2,
 } from "lucide-react";
-import FormHeader from "@/components/formHeader";
-import FormTitle from "@/components/formTitle";
+import FormHeader from "@/components/FormHeader";
+import FormTitle from "@/components/FormTitle";
+import LocationSelectors from "@/components/LocationSelectors";
 
 type Trip = {
   id: number;
@@ -111,7 +112,9 @@ export default function Home() {
         <FormTitle />
       </section>
 
-      
+      <div className="grid items-end gap-4 md:grid-cols-[1fr_auto_1fr]">
+        <LocationSelectors from={from} />
+      </div>
     </main>
   );
 }
