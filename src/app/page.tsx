@@ -106,15 +106,14 @@ export default function Home() {
     <main className="min-h-screen bg-slate-100 p-4 sm:p-8">
       <div className="mx-auto max-w-6xl overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm">
         <FormHeader />
-      </div>
 
-      <section className="p-6 sm:p-8">
-        <FormTitle />
-      </section>
-
-      <div className="grid items-end gap-4 md:grid-cols-[1fr_auto_1fr]">
-        <LocationSelectors from={from} />
+        <section className="p-6 sm:p-8">
+          <FormTitle />
+          <LocationSelectors from={from} to={to} setFrom={setFrom} setTo={setTo} onSwap={handleSwap} />
+        </section>
+        
       </div>
+      
     </main>
   );
 }
