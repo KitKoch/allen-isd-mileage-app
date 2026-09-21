@@ -103,6 +103,24 @@ export default function Home() {
     setTrips([]);
   }
 
+  const LocationSelectorsParentProps = {
+    from: from,
+    to: to,
+    setFrom: setFrom,
+    setTo: setTo,
+    onSwap: handleSwap,
+  };
+
+  const DistanceCardParentProps = {
+    from: from,
+    to: to,
+    miles: miles,
+    error: error,
+    loading: loading,
+    date: dateOptions.toString(),
+    addTrip: handleAddTrip,
+  };
+
    return (
     <main className="min-h-screen bg-slate-100 p-4 sm:p-8">
       <div className="mx-auto max-w-6xl overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm">
@@ -110,8 +128,8 @@ export default function Home() {
 
         <section className="p-6 sm:p-8">
           <FormTitle />
-          <LocationSelectors from={from} to={to} setFrom={setFrom} setTo={setTo} onSwap={handleSwap} />
-          <DistanceCard from={from} to={to} miles={miles} error={error} loading={loading} date={dateOptions.toString()} />
+          <LocationSelectors {...LocationSelectorsParentProps} />
+          <DistanceCard {...DistanceCardParentProps} />
         </section>
 
       </div>

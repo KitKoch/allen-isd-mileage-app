@@ -1,6 +1,6 @@
 "use client";
 
-import { MapPin, Loader2 } from "lucide-react";
+import { MapPin, Loader2, Car } from "lucide-react";
 
 type DistanceCardProps = {
     from: string;
@@ -9,6 +9,7 @@ type DistanceCardProps = {
     miles: number | null;
     date: string;
     loading: boolean;
+    addTrip: () => void;
 };
 
 export default function DistanceCard({
@@ -18,6 +19,7 @@ export default function DistanceCard({
     date,
     loading,
     error,
+    addTrip,
 } : DistanceCardProps) {
     return (
         <div className="mt-6 flex flex-col gap-5 rounded-xl bg-blue-50 p-5 sm:flex-row sm:items-center sm:justify-between">
@@ -48,6 +50,15 @@ export default function DistanceCard({
                     )}
                 </div>
             </div>
+
+            <button
+                onClick={addTrip}
+                disabled={miles === null || loading}
+                className="flex h-14 items-center justify-center gap-3 rounded-lg bg-blue-500 px-6 font-semibold"
+            >
+                <Car size={20} />
+                Add Trip
+            </button>
         </div>
     )
 }
