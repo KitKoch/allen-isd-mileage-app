@@ -1,10 +1,11 @@
 "use client";
 
-import { MapPin } from "lucide-react";
+import { MapPin, Loader2 } from "lucide-react";
 
 type DistanceCardProps = {
     from: string;
     to: string;
+    error: string;
     miles: number | null;
     date: string;
     loading: boolean;
@@ -15,7 +16,8 @@ export default function DistanceCard({
     to,
     miles,
     date,
-    loading
+    loading,
+    error,
 } : DistanceCardProps) {
     return (
         <div className="mt-6 flex flex-col gap-5 rounded-xl bg-blue-50 p-5 sm:flex-row sm:items-center sm:justify-between">
@@ -24,13 +26,26 @@ export default function DistanceCard({
                     <MapPin size={30} />
                 </div>
                 <div>
-                    <p className="text-sm font-medium text-blue-900">
+                    <p className="text-lg font-medium text-blue-900">
                         Distance
                     </p>
-
-                    {/* {loading ? (
-                        <
-                    )} */}
+    
+                    {loading ? (
+                    <div className="mt-1 flex items-center gap-2 text-slate-500">
+                        <Loader2 className="h-5 w-5 animate-spin" />
+                        <p className="text-2xl font-bold">
+                            Loading...
+                        </p>
+                    </div>
+                    ) : miles !== null ? (
+                        <p className="mt-1 text-3xl font-bold text-slate-900">
+                            {miles.toFixed(2)} miles
+                        </p>
+                    ) : (
+                        <p className="mt-1 text-lg font-semibold text-red-600">
+                            {error || "Mileage not available"}
+                        </p>
+                    )}
                 </div>
             </div>
         </div>

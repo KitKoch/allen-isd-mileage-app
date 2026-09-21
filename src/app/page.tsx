@@ -60,7 +60,7 @@ export default function Home() {
         if(error instanceof Error) {
           setError(error.message);
         } else {
-          setError("Unable to get mileage.");
+          setError("Unable to get mileage");
         }
       } finally {
         setLoading(false);
@@ -111,7 +111,7 @@ export default function Home() {
         <section className="p-6 sm:p-8">
           <FormTitle />
           <LocationSelectors from={from} to={to} setFrom={setFrom} setTo={setTo} onSwap={handleSwap} />
-          <DistanceCard from={from} to={to} miles={miles} date={dateOptions.toString()} />
+          <DistanceCard from={from} to={to} miles={miles} error={error} loading={loading} date={dateOptions.toString()} />
         </section>
 
       </div>
