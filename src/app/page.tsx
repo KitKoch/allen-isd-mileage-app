@@ -13,6 +13,7 @@ import {
 import FormHeader from "@/components/FormHeader";
 import FormTitle from "@/components/FormTitle";
 import LocationSelectors from "@/components/LocationSelectors";
+import DistanceCard from "@/components/DistanceCard";
 
 type Trip = {
   id: number;
@@ -110,8 +111,9 @@ export default function Home() {
         <section className="p-6 sm:p-8">
           <FormTitle />
           <LocationSelectors from={from} to={to} setFrom={setFrom} setTo={setTo} onSwap={handleSwap} />
+          <DistanceCard from={from} to={to} miles={miles} date={dateOptions.toString()} />
         </section>
-        
+
       </div>
       
     </main>
