@@ -2,20 +2,15 @@
 
 import { useState, useEffect } from "react";
 import { locations, type Location } from "@/data/mileage";
-import {
-  ArrowLeftRight,
-  Calculator,
-  Download,
-  MapPin,
-  Settings,
-  Trash2,
-} from "lucide-react";
 import FormHeader from "@/components/FormHeader";
 import FormTitle from "@/components/FormTitle";
 import LocationSelectors from "@/components/LocationSelectors";
 import DistanceCard from "@/components/DistanceCard";
+import RecentTrips from "@/components/RecentTrips";
+import { DragEndEvent } from "@dnd-kit/core";
+import { arrayMove } from "@dnd-kit/sortable";
 
-type Trip = {
+export type Trip = {
   id: number;
   from: Location;
   to: Location;
@@ -90,7 +85,7 @@ export default function Home() {
       date: new Date().toLocaleDateString("en-US", dateOptions),
     };
 
-    setTrips((currentTrips) => [newTrip, ...currentTrips]);
+    setTrips((currentTrips) => [...currentTrips, newTrip]);
   }
 
   //Delete trip
@@ -101,6 +96,27 @@ export default function Home() {
   //Clear trips
   function handleClearTrips() {
     setTrips([]);
+  }
+
+  //Drag or Rearrange Trips
+  function handleDragEnd(event: DragEndEvent) {
+    const { active, over } = event;
+
+    if(!over || active.id === over.id) {
+      return;
+    }
+
+    setTrips((currentTrips) => {
+      const oldIndex = currentTrips.findIndex(
+        (trip) => trip.id === active.id
+      );
+
+      const newIndex = currentTrips.findIndex(
+        (trip) => trip.id === over.id
+      );
+
+      return arrayMove(currentTrips, oldIndex, newIndex);
+    });
   }
 
   const LocationSelectorsParentProps = {
@@ -121,6 +137,12 @@ export default function Home() {
     addTrip: handleAddTrip,
   };
 
+  const RecentTripsParentProps = {
+    trips: trips,
+    clearTrips: handleClearTrips,
+    deleteTrip: handleDeleteTrip,
+  }
+
    return (
     <main className="min-h-screen bg-slate-100 p-4 sm:p-8">
       <div className="mx-auto max-w-6xl overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm">
@@ -130,6 +152,7 @@ export default function Home() {
           <FormTitle />
           <LocationSelectors {...LocationSelectorsParentProps} />
           <DistanceCard {...DistanceCardParentProps} />
+          <RecentTrips {...RecentTripsParentProps} />
         </section>
 
       </div>
