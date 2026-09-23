@@ -19,21 +19,17 @@ export type Trip = {
 }
 
 export default function Home() {
+
+  //======================================== STATE ============================================//
   const [from, setFrom] = useState<Location>("Admin. Bldg.");
   const [to, setTo] = useState<Location>("Allen H.S.");
-
   const [miles, setMiles] = useState<number | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-
   const [trips, setTrips] = useState<Trip[]>([]);
+  const [tripDate, setTripDate] = useState(getTodayDate()); 
 
-  const dateOptions: Intl.DateTimeFormatOptions = {
-    month: "short",
-    day: "numeric",
-    year: "numeric",
-  };
-
+  //======================================= FUNCTIONS =======================================//
   useEffect(() => {
     async function loadMileage() {
       setLoading(true);
@@ -82,7 +78,7 @@ export default function Home() {
       from,
       to,
       miles,
-      date: new Date().toLocaleDateString("en-US", dateOptions),
+      date: tripDate,
     };
 
     setTrips((currentTrips) => [...currentTrips, newTrip]);
@@ -119,6 +115,17 @@ export default function Home() {
     });
   }
 
+  function getTodayDate() {
+    const today = new Date();
+
+    const year = today.getFullYear();
+    const month = String(today.getMonth() + 1).padStart(2, "0");
+    const day = String(today.getDate()).padStart(2, "0");
+
+    return `${year}-${month}-${day}`;
+  }
+
+  //======================================== PROPS ============================================//
   const LocationSelectorsParentProps = {
     from: from,
     to: to,
@@ -133,7 +140,7 @@ export default function Home() {
     miles: miles,
     error: error,
     loading: loading,
-    date: dateOptions.toString(),
+    date: tripDate,
     addTrip: handleAddTrip,
   };
 
