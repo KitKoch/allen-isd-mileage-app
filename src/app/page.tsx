@@ -9,6 +9,7 @@ import DistanceCard from "@/components/DistanceCard";
 import RecentTrips from "@/components/RecentTrips";
 import { DragEndEvent } from "@dnd-kit/core";
 import { arrayMove } from "@dnd-kit/sortable";
+import TripDateSelector from "@/components/TripDateSelector";
 
 export type Trip = {
   id: number;
@@ -115,6 +116,18 @@ export default function Home() {
     });
   }
 
+  //Update trip
+  function handleUpdateTrip(
+    id: number, 
+    updates: Partial<Pick<Trip, "date">>
+  ) {
+    setTrips((currentTrips) => 
+       currentTrips.map((trip) => 
+        trip.id === id ? { ...trip, ...updates } : trip
+      )
+    );
+  }
+
   function getTodayDate() {
     const today = new Date();
 
@@ -148,7 +161,12 @@ export default function Home() {
     trips: trips,
     clearTrips: handleClearTrips,
     deleteTrip: handleDeleteTrip,
-  }
+  };
+
+  const TripDateSelectorParentProps = {
+    tripDate: tripDate,
+    setTripDate: setTripDate,
+  };
 
    return (
     <main className="min-h-screen bg-slate-100 p-4 sm:p-8">
@@ -157,6 +175,7 @@ export default function Home() {
 
         <section className="p-6 sm:p-8">
           <FormTitle />
+          <TripDateSelector {...TripDateSelectorParentProps} />
           <LocationSelectors {...LocationSelectorsParentProps} />
           <DistanceCard {...DistanceCardParentProps} />
           <RecentTrips {...RecentTripsParentProps} />

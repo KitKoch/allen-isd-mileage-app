@@ -17,7 +17,7 @@ export default function RecentTrips({
     return (
         <div className="mt-8">
             <div className="mb-3 flex items-center justify-between">
-                <h2 className="text-xl font-bold text-slate-900:">
+                <h2 className="text-xl font-bold text-slate-900">
                     Recent Trips
                 </h2>
 
