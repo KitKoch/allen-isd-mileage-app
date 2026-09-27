@@ -1,14 +1,12 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { locations, type Location } from "@/data/mileage";
+import { type Location } from "@/data/mileage";
 import FormHeader from "@/components/FormHeader";
 import FormTitle from "@/components/FormTitle";
 import LocationSelectors from "@/components/LocationSelectors";
 import DistanceCard from "@/components/DistanceCard";
 import RecentTrips from "@/components/RecentTrips";
-import { DragEndEvent } from "@dnd-kit/core";
-import { arrayMove } from "@dnd-kit/sortable";
 import TripDateSelector from "@/components/TripDateSelector";
 
 export type Trip = {
@@ -62,6 +60,40 @@ export default function Home() {
     loadMileage();
   }, [from, to]);
 
+  //Update route
+  async function handleUpdateTripRoute(
+    id: number,
+    newFrom: Location,
+    newTo: Location,
+  ) {
+    try {
+      const response = await fetch(
+        `/api/mileage?from=${encodeURIComponent(newFrom)}&to=${encodeURIComponent(newTo)}`
+      );
+
+      const data = await response.json();
+
+      if(!response.ok) {
+        throw new Error(data.error || "Unable to get mileage");
+      }
+
+      setTrips((currentTrips) => 
+        currentTrips.map((trip) =>
+          trip.id === id ? 
+          {
+            ...trip,
+            from: newFrom,
+            to: newTo,
+            miles: data.miles,
+          } : trip
+        )
+      );
+    } catch (error) {
+      console.error("Unable to update trip:", error);
+    };
+  }
+  
+
   //Swap location
   function handleSwap() {
     setFrom(to);
@@ -95,35 +127,14 @@ export default function Home() {
     setTrips([]);
   }
 
-  //Drag or Rearrange Trips
-  function handleDragEnd(event: DragEndEvent) {
-    const { active, over } = event;
-
-    if(!over || active.id === over.id) {
-      return;
-    }
-
-    setTrips((currentTrips) => {
-      const oldIndex = currentTrips.findIndex(
-        (trip) => trip.id === active.id
-      );
-
-      const newIndex = currentTrips.findIndex(
-        (trip) => trip.id === over.id
-      );
-
-      return arrayMove(currentTrips, oldIndex, newIndex);
-    });
-  }
-
-  //Update trip
-  function handleUpdateTrip(
+  //Update date
+  function handleUpdateDate(
     id: number, 
-    updates: Partial<Pick<Trip, "date">>
+    newDate: string,
   ) {
     setTrips((currentTrips) => 
        currentTrips.map((trip) => 
-        trip.id === id ? { ...trip, ...updates } : trip
+        trip.id === id ? { ...trip, date: newDate } : trip
       )
     );
   }
@@ -161,11 +172,13 @@ export default function Home() {
     trips: trips,
     clearTrips: handleClearTrips,
     deleteTrip: handleDeleteTrip,
+    updateDate: handleUpdateDate,
   };
 
   const TripDateSelectorParentProps = {
     tripDate: tripDate,
-    setTripDate: setTripDate,
+    setDate: setTripDate,
+
   };
 
    return (

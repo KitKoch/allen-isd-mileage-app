@@ -4,15 +4,17 @@ import { Trip } from "@/app/page";
 import { Trash2 } from "lucide-react";
 
 type RecentTripsProps = {
-    trips: Trip[],
-    clearTrips: () => void,
-    deleteTrip: (id: number) => void,
+    trips: Trip[];
+    clearTrips: () => void;
+    deleteTrip: (id: number) => void;
+    updateDate: (id: number, newDate: string) => void;
 };
 
 export default function RecentTrips({ 
     trips,
     clearTrips, 
     deleteTrip,
+    updateDate,
 }: RecentTripsProps) {
     return (
         <div className="mt-8">
@@ -49,8 +51,13 @@ export default function RecentTrips({
                         key={trip.id}
                         className="flex items-center border-b-2 border-blue-200 px-5 py-4 last:border-b-0"
                     >
-                        <div className="hidden flex-1 text-slate-500 md:block">
-                            {trip.date}
+                        <div className="hidden flex-1 md:block">
+                            <input
+                                type="date"
+                                value={trip.date}
+                                onChange={(e) => updateDate(trip.id, e.target.value)}
+                                className="rounded-md border border-transparent bg-transparent px-2 py-1 text-slate-600 outline-none transition hover:border-slate-300 focus:border-blue-500 focus:bg-white"
+                            />
                         </div>
 
                         <div className="min-w-0 flex-1 font-medium text-slate-800">

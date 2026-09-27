@@ -2,12 +2,12 @@
 
 type TripDateSelectorProps = {
     tripDate: string;
-    setTripDate: (date: string) => void;
+    setDate: (date: string) => void;
 };
 
 export default function TripDateSelector({ 
     tripDate, 
-    setTripDate 
+    setDate 
 }: TripDateSelectorProps) {
     return (
         <div className="mb-5 max-w-xs">
@@ -18,7 +18,7 @@ export default function TripDateSelector({
             <input 
                 type="date"
                 value={tripDate}
-                onChange={(e) => setTripDate(e.target.value)}
+                onChange={(e) => setDate(e.target.value)}
                 className="h-12 w-full rounded-lg border border-slate-300 bg-white px-4 text-slate-800 outline-none transition focus:border-blue-500 focus:ring-2 focus-ring-blue-100"
             />
         </div>
