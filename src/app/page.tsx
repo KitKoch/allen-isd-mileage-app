@@ -159,12 +159,9 @@ export default function Home() {
   };
 
   const DistanceCardParentProps = {
-    from: from,
-    to: to,
     miles: miles,
     error: error,
     loading: loading,
-    date: tripDate,
     addTrip: handleAddTrip,
   };
 
